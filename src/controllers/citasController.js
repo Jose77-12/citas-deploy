@@ -22,6 +22,13 @@ export default {
     createCita: async (req, res) => {
         try {
             const cita = await ORM.createCita(req.body)
+            await fetch('https://jbustillos:Popiyu77@bustilliosapi.app.n8n.cloud/webhook-test/4ef22d53-7347-4b40-b244-107102c0d5cc', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cita: cita
+                })
+            })
             res.json(cita)
         } catch (error) {
             res.status(500).json({ error: error.message })
