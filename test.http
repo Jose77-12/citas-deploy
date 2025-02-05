@@ -1,4 +1,0 @@
-POST https://citas-deploy.onrender.com/api/appointments {
-    Content-Type: application/json,
-    
-}

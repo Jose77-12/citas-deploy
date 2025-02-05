@@ -1,4 +1,8 @@
 import ORM from './citasORM.js'
+import jwt from 'jsonwebtoken';
+
+const webHookUrl = new URL('https://bustilliosapi.app.n8n.cloud/webhook/4ef22d53-7347-4b40-b244-107102c0d5cc')
+const password = 'Popiyu77'
 
 export default {
     getCitas: async (req, res) => {
@@ -22,12 +26,17 @@ export default {
     createCita: async (req, res) => {
         try {
             const cita = await ORM.createCita(req.body)
-            await fetch('https://jbustillos:Popiyu77@bustilliosapi.app.n8n.cloud/webhook-test/4ef22d53-7347-4b40-b244-107102c0d5cc', {
+            const event = {
+                event: 'create',
+                cita: cita
+            }
+            await fetch(webHookUrl, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    cita: cita
-                })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwt.sign(event, password)}`
+                },
+                body: JSON.stringify(event)
             })
             res.json(cita)
         } catch (error) {

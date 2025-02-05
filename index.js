@@ -1,4 +1,4 @@
-import App from './src/app.js'
+// import App from './src/app.js'
 
-const app = new App
-app.run()
+// const app = new App
+// app.run()
