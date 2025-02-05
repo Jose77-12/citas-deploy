@@ -4,11 +4,15 @@ const postgresUrl = 'postgresql://citas_8kpc_user:8vrugvXE8R6fioHMF3cNVoNJCpSwVc
 
 const db = new Sequelize(postgresUrl)
 
-// try {
-    await db.authenticate();
-//     console.log('Connection has been established successfully.');
-// } catch (error) {
-//     console.error('Unable to connect to the database:', error);
-// }
-export default db
 
+await db.authenticate();
+
+db.query(`CREATE TABLE IF NOT EXISTS citas (
+    id SERIAL PRIMARY KEY,
+    fecha TEXT,
+    hora TEXT,
+    cliente TEXT,
+    descripcion TEXT
+)`)
+
+export default db

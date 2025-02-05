@@ -20,11 +20,11 @@ class CitasORM {
     }
 
     static async createCita(citaData) {
-        const { fecha, descripcion, pacienteId } = citaData
+        const { fecha, hora, cliente, descripcion } = citaData
         try {
             const result = await db.query(
-                'INSERT INTO citas (fecha, descripcion, paciente_id) VALUES ($1, $2, $3) RETURNING *',
-                [fecha, descripcion, pacienteId]
+                'INSERT INTO citas (fecha, hora, cliente, descripcion) VALUES ($1, $2, $3, $4) RETURNING *',
+                [fecha, hora, cliente, descripcion]
             )
             return result.rows[0]
         } catch (error) {
@@ -33,11 +33,11 @@ class CitasORM {
     }
 
     static async updateCita(id, citaData) {
-        const { fecha, descripcion, pacienteId } = citaData
+        const { fecha, hora, cliente, descripcion } = citaData
         try {
             const result = await db.query(
-                'UPDATE citas SET fecha = $1, descripcion = $2, paciente_id = $3 WHERE id = $4 RETURNING *',
-                [fecha, descripcion, pacienteId, id]
+                'UPDATE citas SET fecha = $1, hora = $2, cliente = $3, descripcion = $4 WHERE id = $5 RETURNING *',
+                [fecha, hora, cliente, descripcion, id]
             )
             return result.rows[0]
         } catch (error) {
