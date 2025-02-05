@@ -4,7 +4,7 @@ class CitasORM {
     static async getCitas() {
         try {
             const citas = await db.query('SELECT * FROM citas')
-            return citas
+            return [...citas]
         } catch (error) {
             throw new Error('Error fetching citas: ' + error.message)
         }
@@ -26,7 +26,7 @@ class CitasORM {
                 'INSERT INTO citas (fecha, hora, cliente, descripcion) VALUES ($1, $2, $3, $4) RETURNING *',
                 [fecha, hora, cliente, descripcion]
             )
-            return result.rows[0]
+            return result[0]
         } catch (error) {
             throw new Error('Error creating cita: ' + error.message)
         }
@@ -39,7 +39,7 @@ class CitasORM {
                 'UPDATE citas SET fecha = $1, hora = $2, cliente = $3, descripcion = $4 WHERE id = $5 RETURNING *',
                 [fecha, hora, cliente, descripcion, id]
             )
-            return result.rows[0]
+            return result[0]
         } catch (error) {
             throw new Error('Error updating cita: ' + error.message)
         }
